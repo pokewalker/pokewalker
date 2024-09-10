@@ -25,3 +25,24 @@ The idea for our app is inspired by this mechanic:
 - As they gain more experience from walking, they can evolve their Pokémon and unlock new ones.
 
 The app aims to motivate people to **exercise** through **gamification**, using the incentive of "walking" with a **virtual pet**.
+
+### Equipe/Team
+
+<table style="border-collapse: collapse; width: 100%;">
+  <tr>
+    <td align="center" style="border: none;">
+      <img src="https://avatars.githubusercontent.com/u/60991787?v=4" width="200" height="200" /><br>
+      Bruno Ricardo Corrêa - 260759
+    </td>
+    <td align="center" style="border: none;">
+      <img src="https://avatars.githubusercontent.com/u/46936512?v=4" width="200" height="200" /><br>
+      Gino Carlo Graciano Grippo - 248301
+    </td>
+    <td align="center" style="border: none;">
+      <img src="https://avatars.githubusercontent.com/u/106618112?v=4" width="200" height="200" /><br>
+      Vinícius Iutaka Nogueira Fujioka - 260933
+    </td>
+  </tr>
+</table>
+
+
