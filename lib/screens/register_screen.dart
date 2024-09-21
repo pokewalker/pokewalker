@@ -44,7 +44,7 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 30),
                 Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                  width: screenWidth * 0.8,
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
@@ -67,7 +67,7 @@ class RegisterScreen extends StatelessWidget {
 
                 // Campo de Usuário
                 Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                  width: screenWidth * 0.8,
                   child: TextField(
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
@@ -94,7 +94,7 @@ class RegisterScreen extends StatelessWidget {
 
                 // Campo de Senha
                 Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                  width: screenWidth * 0.8,
                   child: TextField(
                     obscureText: true,
                     textAlign: TextAlign.center,
@@ -121,7 +121,7 @@ class RegisterScreen extends StatelessWidget {
                 SizedBox(height: 20),
 
                 Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                  width: screenWidth * 0.8,
                   child: TextField(
                     obscureText: true,
                     textAlign: TextAlign.center,
@@ -148,7 +148,7 @@ class RegisterScreen extends StatelessWidget {
                 SizedBox(height: 20),
 
                 Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                  width: screenWidth * 0.8,
                   child: TextField(
                     obscureText: true,
                     textAlign: TextAlign.center,
@@ -176,7 +176,7 @@ class RegisterScreen extends StatelessWidget {
 
                   // Botão de Cadastrar
                 Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                  width: screenWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -186,7 +186,7 @@ class RegisterScreen extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(198, 33, 33, 1),
+                      backgroundColor: Color.fromRGBO(107, 107, 107, 1),
                       padding: EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),

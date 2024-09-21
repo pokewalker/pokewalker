@@ -18,23 +18,20 @@ class PokemonItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Ação ao clicar no Pokémon
-         Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              if (shouldEvolve()) {
-                return PokevolutionScreen(
-              selectedPokemon: pokemon, // Passa o Pokémon selecionado
-            );
-              } else {
-                return PokewalkerScreen(
-              selectedPokemon: pokemon,
-              kilometersToNextLevel: kilometersToNextLevel,
-               // Passa o Pokémon selecionado
-            );
-              }
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) {
+            if (shouldEvolve()) {
+              return PokevolutionScreen(
+                selectedPokemon: pokemon, // Passa o Pokémon selecionado
+              );
+            } else {
+              return PokewalkerScreen(
+                selectedPokemon: pokemon,
+                kilometersToNextLevel: kilometersToNextLevel,
+                // Passa o Pokémon selecionado
+              );
             }
-
-          ),
+          }),
         );
       },
       child: Card(
@@ -47,6 +44,8 @@ class PokemonItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(6.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.network(
                 pokemon['img']!,

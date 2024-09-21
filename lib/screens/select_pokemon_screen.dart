@@ -64,7 +64,7 @@ class SelectPokemonScreen extends StatelessWidget {
               children: [
                 SizedBox(height: 30),
                 Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                  width: screenWidth * 0.8,
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
@@ -87,7 +87,7 @@ class SelectPokemonScreen extends StatelessWidget {
                     height: 10), // Espaçamento menor entre o título e o grid
                 Expanded(
                   child: Container(
-                    width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                    width: screenWidth * 0.6,
                     child: GridView.builder(
                       padding: EdgeInsets.zero, // Remove padding extra
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

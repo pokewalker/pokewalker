@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pokewalker/screens/autenticate_screen.dart';
+import 'package:pokewalker/screens/auth_screen.dart';
 import 'package:pokewalker/screens/register_screen.dart';
 
 class LandingPageScreen extends StatelessWidget {
@@ -8,6 +8,8 @@ class LandingPageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(105, 210, 210, 1.0),
       body: Center(
@@ -66,9 +68,8 @@ class LandingPageScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.8, // Ocupa toda a largura disponível
-              height: 50, // Altura fixa para o botão
+              width: screenWidth * 0.8, // Ocupa toda a largura disponível
+              height: 60, // Altura fixa para o botão
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -97,9 +98,8 @@ class LandingPageScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.8, // Ocupa toda a largura disponível
-              height: 50, // Altura fixa para o botão
+              width: screenWidth * 0.8, // Ocupa toda a largura disponível
+              height: 60, // Altura fixa para o botão
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
