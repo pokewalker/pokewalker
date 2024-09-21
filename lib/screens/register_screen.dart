@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/screens/select_pokemon_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -117,7 +118,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
 
                 Container(
                   width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
@@ -144,7 +145,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
 
                 Container(
                   width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
@@ -173,38 +174,16 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 40),
 
-                // Botão de Login
+                  // Botão de Cadastrar
                 Container(
                   width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Lógica do botão de login
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(198, 33, 33, 1),
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text(
-                      'Login',
-                      style: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SelectPokemonScreen(),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Lógica do botão de login
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(198, 33, 33, 1),
@@ -214,7 +193,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Login',
+                      'Cadastrar',
                       style: GoogleFonts.quicksand(
                         textStyle: TextStyle(
                           fontSize: 20,

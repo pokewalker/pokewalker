@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokewalker/pokemon_item.dart';
+import 'package:pokewalker/screens/landing_page_screen.dart';
 
 class SelectPokemonScreen extends StatelessWidget {
   SelectPokemonScreen({super.key});
@@ -155,7 +156,11 @@ class SelectPokemonScreen extends StatelessWidget {
               icon: Icon(Icons.arrow_back, color: Colors.black, size: 30),
               onPressed: () {
                 // Lógica de voltar
-                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => LandingPageScreen(),
+                        ),
+                      );
               },
             ),
           ),
