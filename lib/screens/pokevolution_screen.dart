@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokewalker/screens/select_pokemon_screen.dart';
+import 'package:pokewalker/screens/thank_you_screen.dart';
 
 class PokevolutionScreen extends StatelessWidget {
   final Map<String, String> selectedPokemon;
@@ -117,7 +118,11 @@ class PokevolutionScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      print("Ultima evolução clicado");
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ThankYouScreen(),
+                        ),
+                      );
                     },
                     child: Text(
                       'ULTIMA EVOLUÇÃO!',
