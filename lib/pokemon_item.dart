@@ -1,22 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:pokewalker/screens/pokevolution_screen.dart';
+import 'package:pokewalker/screens/pokewalker_screen.dart';
 
 class PokemonItem extends StatelessWidget {
   final Map<String, String> pokemon;
 
-  PokemonItem({required this.pokemon});
+  final double kilometersToNextLevel;
+
+  PokemonItem({required this.pokemon, required this.kilometersToNextLevel});
+
+  bool shouldEvolve() {
+    return double.tryParse(pokemon['kilometers']!) == kilometersToNextLevel;
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         // Ação ao clicar no Pokémon
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text('Você clicou no ${pokemon['name']}!'),
+         Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              if (shouldEvolve()) {
+                return PokevolutionScreen(
+              selectedPokemon: pokemon, // Passa o Pokémon selecionado
             );
-          },
+              } else {
+                return PokewalkerScreen(
+              selectedPokemon: pokemon,
+              kilometersToNextLevel: kilometersToNextLevel,
+               // Passa o Pokémon selecionado
+            );
+              }
+            }
+
+          ),
         );
       },
       child: Card(

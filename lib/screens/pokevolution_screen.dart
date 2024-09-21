@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pokewalker/screens/landing_page_screen.dart';
 import 'package:pokewalker/screens/select_pokemon_screen.dart';
 
 class PokevolutionScreen extends StatelessWidget {
-  const PokevolutionScreen({super.key});
+  final Map<String, String> selectedPokemon;
+
+  const PokevolutionScreen({super.key, required this.selectedPokemon});
 
   @override
   Widget build(BuildContext context) {
     // Obtém a largura da tela para garantir o design responsivo
     double screenWidth = MediaQuery.of(context).size.width;
-
-    // Define a porcentagem do progresso
-    double progressPercentage = 0.4; // Exemplo: 40% de progresso
 
     return Scaffold(
       body: Stack(
@@ -57,15 +55,15 @@ class PokevolutionScreen extends StatelessWidget {
                     children: [
                       // Imagem da Pokebola
                       Image.network(
-                        'https://i.imgur.com/CEiBgSK.png', // Substitua pelo link direto da sua imagem
+                        'https://i.imgur.com/CEiBgSK.png',
                         fit: BoxFit.contain,
                         width: screenWidth * 0.6,
                       ),
-                      // Imagem do Pokémon sobrepondo a Pokebola
+                      // Imagem do Pokémon selecionado sobrepondo a Pokebola
                       Align(
                         alignment: Alignment(0.0, -0.2),
                         child: Image.network(
-                          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png', // Link para a imagem do Pokémon
+                          selectedPokemon['img']!,
                           fit: BoxFit.contain,
                           width: screenWidth * 0.25,
                         ),
@@ -75,7 +73,7 @@ class PokevolutionScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 30),
 
-                // Botão 1 (Distância percorrida)
+                // Texto de evolução
                 Container(
                   width: screenWidth * 0.7,
                   padding: EdgeInsets.symmetric(vertical: 16),
@@ -87,17 +85,17 @@ class PokevolutionScreen extends StatelessWidget {
                   child: ShaderMask(
                     shaderCallback: (bounds) {
                       return LinearGradient(
-                        colors: [Colors.black, Colors.black], // Cor da borda
-                        stops: [1.0, 1.0], // Define o contorno
+                        colors: [Colors.black, Colors.black],
+                        stops: [1.0, 1.0],
                       ).createShader(bounds);
                     },
                     child: Text(
-                      'PARABÉNS VOCÊ EVOLUIU SEU POKÉMON!',
+                      'PARABÉNS, VOCÊ EVOLUIU SEU ${selectedPokemon['name']?.toUpperCase()}!',
                       style: GoogleFonts.bungeeHairline(
                         textStyle: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white, // Cor do texto
+                          color: Colors.white,
                         ),
                       ),
                       textAlign: TextAlign.center,
@@ -106,7 +104,7 @@ class PokevolutionScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
 
-// Botão 2 (Última evolução)
+                // Botão para verificar última evolução
                 Container(
                   width: screenWidth * 0.7,
                   height: 50,
@@ -121,47 +119,21 @@ class PokevolutionScreen extends StatelessWidget {
                     onPressed: () {
                       print("Ultima evolução clicado");
                     },
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        // Texto com borda
-                        ShaderMask(
-                          shaderCallback: (bounds) {
-                            return LinearGradient(
-                              colors: [Colors.black, Colors.black],
-                              stops: [1.0, 1.0],
-                            ).createShader(bounds);
-                          },
-                          child: Text(
-                            'ULTIMA EVOLUÇÃO!',
-                            style: GoogleFonts.bungeeHairline(
-                              textStyle: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors
-                                    .black, // Tornar o texto transparente
-                              ),
-                            ),
-                          ),
+                    child: Text(
+                      'ULTIMA EVOLUÇÃO!',
+                      style: GoogleFonts.bungeeHairline(
+                        textStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
-                        // Texto principal
-                        Text(
-                          'ULTIMA EVOLUÇÃO!',
-                          style: GoogleFonts.bungeeHairline(
-                            textStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black, // Cor do texto
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
 
-                // Botão 3 (Selecionar outro)
+                // Botão para selecionar outro Pokémon
                 Container(
                   width: screenWidth * 0.7,
                   height: 50,
@@ -180,45 +152,18 @@ class PokevolutionScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        // Texto com borda
-                        ShaderMask(
-                          shaderCallback: (bounds) {
-                            return LinearGradient(
-                              colors: [Colors.black, Colors.black],
-                              stops: [1.0, 1.0],
-                            ).createShader(bounds);
-                          },
-                          child: Text(
-                            'SELECIONAR OUTRO',
-                            style: GoogleFonts.bungeeHairline(
-                              textStyle: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors
-                                    .black, // Tornar o texto transparente
-                              ),
-                            ),
-                          ),
+                    child: Text(
+                      'SELECIONAR OUTRO',
+                      style: GoogleFonts.bungeeHairline(
+                        textStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
-                        // Texto principal
-                        Text(
-                          'SELECIONAR OUTRO',
-                          style: GoogleFonts.bungeeHairline(
-                            textStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black, // Cor do texto
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-
                 SizedBox(height: 30),
               ],
             ),
@@ -230,7 +175,6 @@ class PokevolutionScreen extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.black, size: 30),
               onPressed: () {
-                // Lógica de voltar
                 Navigator.of(context).pop();
               },
             ),

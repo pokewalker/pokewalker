@@ -6,76 +6,34 @@ import 'package:pokewalker/screens/landing_page_screen.dart';
 class SelectPokemonScreen extends StatelessWidget {
   SelectPokemonScreen({super.key});
 
+  final double kilometersToNextLevel = 9.0;
+
   final List<Map<String, String>> pokemons = [
     {
       'name': 'Bulbasaur',
-      'level': 'Lvl. 5',
+      'level': 'Lvl. 4',
+      'kilometers': '8',
       'img':
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
     },
     {
       'name': 'Charmander',
-      'level': 'Lvl. 8',
+      'level': 'Lvl. 3',
+      'kilometers': '6.0',
       'img':
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'
     },
     {
       'name': 'Squirtle',
-      'level': 'Lvl. 6',
+      'level': 'Lvl. 2',
+      'kilometers': '4.0',
       'img':
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png'
     },
     {
       'name': 'Pikachu',
-      'level': 'Lvl. 10',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
-    },
-    {
-      'name': 'Charmander',
-      'level': 'Lvl. 8',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'
-    },
-    {
-      'name': 'Squirtle',
-      'level': 'Lvl. 6',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png'
-    },
-    {
-      'name': 'Pikachu',
-      'level': 'Lvl. 10',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
-    },
-    {
-      'name': 'Pikachu',
-      'level': 'Lvl. 10',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
-    },
-    {
-      'name': 'Pikachu',
-      'level': 'Lvl. 10',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
-    },
-    {
-      'name': 'Pikachu',
-      'level': 'Lvl. 10',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
-    },
-    {
-      'name': 'Pikachu',
-      'level': 'Lvl. 10',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
-    },
-    {
-      'name': 'Pikachu',
-      'level': 'Lvl. 10',
+      'level': 'Lvl. 1',
+      'kilometers': '9.0',
       'img':
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
     }
@@ -141,7 +99,7 @@ class SelectPokemonScreen extends StatelessWidget {
                       itemCount: pokemons.length,
                       itemBuilder: (context, index) {
                         final pokemon = pokemons[index];
-                        return PokemonItem(pokemon: pokemon);
+                        return PokemonItem(pokemon: pokemon, kilometersToNextLevel: kilometersToNextLevel);
                       },
                     ),
                   ),

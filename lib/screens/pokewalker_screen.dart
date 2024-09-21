@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PokewalkerScreen extends StatelessWidget {
-  const PokewalkerScreen({super.key});
+  final Map<String, String> selectedPokemon;
+  final double kilometersToNextLevel;
+
+  const PokewalkerScreen({super.key, required this.selectedPokemon, required this.kilometersToNextLevel});
 
   @override
   Widget build(BuildContext context) {
     // Obtém a largura da tela para garantir o design responsivo
     double screenWidth = MediaQuery.of(context).size.width;
 
-    // Define a porcentagem do progresso
-    double progressPercentage = 0.4; // Exemplo: 40% de progresso
+  double kilometersWalked = selectedPokemon['kilometers'] != null
+        ? double.parse(selectedPokemon['kilometers']!)
+        : 0.0;
+
+    double progressPercentage = kilometersWalked / kilometersToNextLevel; 
 
     return Scaffold(
       body: Stack(
@@ -47,7 +53,7 @@ class PokewalkerScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
 
-                // Imagem da Pokebola com o Pokémon
+                // Imagem da Pokebola com o Pokémon selecionado
                 Container(
                   width: screenWidth * 0.6,
                   height: screenWidth * 0.6,
@@ -55,15 +61,15 @@ class PokewalkerScreen extends StatelessWidget {
                     children: [
                       // Imagem da Pokebola
                       Image.network(
-                        'https://i.imgur.com/CEiBgSK.png', // Substitua pelo link direto da sua imagem
+                        'https://i.imgur.com/CEiBgSK.png',
                         fit: BoxFit.contain,
                         width: screenWidth * 0.6,
                       ),
-                      // Imagem do Pokémon sobrepondo a Pokebola
+                      // Imagem do Pokémon selecionado sobrepondo a Pokebola
                       Align(
                         alignment: Alignment(0.0, -0.2),
                         child: Image.network(
-                          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png', // Link para a imagem do Pokémon
+                          selectedPokemon['img']!,
                           fit: BoxFit.contain,
                           width: screenWidth * 0.25,
                         ),
@@ -90,7 +96,7 @@ class PokewalkerScreen extends StatelessWidget {
                       ).createShader(bounds);
                     },
                     child: Text(
-                      '1500 METROS',
+                      '${kilometersWalked * 1000} METROS',
                       style: GoogleFonts.bungeeHairline(
                         textStyle: TextStyle(
                           fontSize: 20,
@@ -121,7 +127,7 @@ class PokewalkerScreen extends StatelessWidget {
                       ).createShader(bounds);
                     },
                     child: Text(
-                      '9 KM RESTANTES',
+                      '${kilometersToNextLevel - kilometersWalked} KM RESTANTES',
                       style: GoogleFonts.bungeeHairline(
                         textStyle: TextStyle(
                           fontSize: 20,
