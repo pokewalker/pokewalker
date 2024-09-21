@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/screens/select_pokemon_screen.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -124,7 +125,11 @@ class AuthScreen extends StatelessWidget {
                   width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Lógica do botão de login
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SelectPokemonScreen(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(198, 33, 33, 1),

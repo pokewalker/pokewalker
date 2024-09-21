@@ -1,8 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/pokemon_item.dart';
 
 class SelectPokemonScreen extends StatelessWidget {
-  const SelectPokemonScreen({super.key});
+  SelectPokemonScreen({super.key});
+
+  final List<Map<String, String>> pokemons = [
+    {
+      'name': 'Bulbasaur',
+      'level': 'Lvl. 5',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
+    },
+    {
+      'name': 'Charmander',
+      'level': 'Lvl. 8',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'
+    },
+    {
+      'name': 'Squirtle',
+      'level': 'Lvl. 6',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png'
+    },
+    {
+      'name': 'Pikachu',
+      'level': 'Lvl. 10',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
+    },
+    {
+      'name': 'Charmander',
+      'level': 'Lvl. 8',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'
+    },
+    {
+      'name': 'Squirtle',
+      'level': 'Lvl. 6',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png'
+    },
+    {
+      'name': 'Pikachu',
+      'level': 'Lvl. 10',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
+    },
+    {
+      'name': 'Pikachu',
+      'level': 'Lvl. 10',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
+    },
+    {
+      'name': 'Pikachu',
+      'level': 'Lvl. 10',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
+    },
+    {
+      'name': 'Pikachu',
+      'level': 'Lvl. 10',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
+    },
+    {
+      'name': 'Pikachu',
+      'level': 'Lvl. 10',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
+    },
+    {
+      'name': 'Pikachu',
+      'level': 'Lvl. 10',
+      'img':
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +100,9 @@ class SelectPokemonScreen extends StatelessWidget {
                 end: Alignment.bottomCenter,
               ),
             ),
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Título
-                Text(
-                  'POKEWALKER',
-                  style: GoogleFonts.bungee(
-                    textStyle: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
                 SizedBox(height: 30),
                 Container(
                   width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
@@ -51,7 +113,7 @@ class SelectPokemonScreen extends StatelessWidget {
                     border: Border.all(color: Colors.black, width: 3),
                   ),
                   child: Text(
-                    'INSIRA SEUS DADOS',
+                    'SELECIONE SEU POKÉMON',
                     style: GoogleFonts.bungeeHairline(
                       textStyle: TextStyle(
                         fontSize: 28,
@@ -62,166 +124,24 @@ class SelectPokemonScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 30),
-
-                // Campo de Usuário
-                Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: 'Usuário',
-                      hintStyle: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32,
-                          color: Colors.grey[600],
-                        ),
+                SizedBox(
+                    height: 10), // Espaçamento menor entre o título e o grid
+                Expanded(
+                  child: Container(
+                    width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
+                    child: GridView.builder(
+                      padding: EdgeInsets.zero, // Remove padding extra
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // Número de ícones por linha
+                        crossAxisSpacing: 10, // Espaçamento horizontal
+                        mainAxisSpacing: 10, // Espaçamento vertical
+                        childAspectRatio: 0.8, // Razão de aspecto dos itens
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[400],
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-
-                // Campo de Senha
-                Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
-                  child: TextField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: 'Senha',
-                      hintStyle: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[400],
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 40),
-
-                Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
-                  child: TextField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: 'Nome',
-                      hintStyle: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[400],
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 40),
-
-                Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
-                  child: TextField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: 'E-mail',
-                      hintStyle: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[400],
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 40),
-
-                // Botão de Login
-                Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Lógica do botão de login
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(198, 33, 33, 1),
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text(
-                      'Login',
-                      style: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                Container(
-                  width: screenWidth * 0.8 < 300 ? screenWidth * 0.8 : 300,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Lógica do botão de login
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(198, 33, 33, 1),
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text(
-                      'Login',
-                      style: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
+                      itemCount: pokemons.length,
+                      itemBuilder: (context, index) {
+                        final pokemon = pokemons[index];
+                        return PokemonItem(pokemon: pokemon);
+                      },
                     ),
                   ),
                 ),
