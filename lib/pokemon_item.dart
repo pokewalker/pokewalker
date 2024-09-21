@@ -7,7 +7,7 @@ class PokemonItem extends StatelessWidget {
 
   final double kilometersToNextLevel;
 
-  PokemonItem({required this.pokemon, required this.kilometersToNextLevel});
+  const PokemonItem({super.key, required this.pokemon, required this.kilometersToNextLevel});
 
   bool shouldEvolve() {
     return double.tryParse(pokemon['kilometers']!) == kilometersToNextLevel;
