@@ -53,6 +53,14 @@ class PokemonItem extends StatelessWidget {
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/images/pokemon-image-not-found.png', // Caminho da imagem padrão
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
               Text(
                 pokemon.name,

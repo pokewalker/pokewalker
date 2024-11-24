@@ -68,6 +68,14 @@ class PokevolutionScreen extends StatelessWidget {
                           selectedPokemon.img,
                           fit: BoxFit.contain,
                           width: screenWidth * 0.25,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/images/pokemon-image-not-found.png', // Caminho da imagem padrão
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
                       ),
                     ],
