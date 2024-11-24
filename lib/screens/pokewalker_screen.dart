@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/model/pokemon.dart';
 
 class PokewalkerScreen extends StatelessWidget {
-  final Map<String, String> selectedPokemon;
-  final double kilometersToNextLevel;
+  final Pokemon selectedPokemon;
 
-  const PokewalkerScreen({super.key, required this.selectedPokemon, required this.kilometersToNextLevel});
+  const PokewalkerScreen({super.key, required this.selectedPokemon});
 
   @override
   Widget build(BuildContext context) {
     // Obtém a largura da tela para garantir o design responsivo
     double screenWidth = MediaQuery.of(context).size.width;
 
-  double kilometersWalked = selectedPokemon['kilometers'] != null
-        ? double.parse(selectedPokemon['kilometers']!)
-        : 0.0;
+    int metersWalked = selectedPokemon.meters;
+    int metersToNextLevel = selectedPokemon.metersToNextLevel;
 
-    double progressPercentage = kilometersWalked / kilometersToNextLevel; 
+    double progressPercentage = metersWalked / metersToNextLevel;
 
     return Scaffold(
       body: Stack(
@@ -69,7 +68,7 @@ class PokewalkerScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment(0.0, -0.2),
                         child: Image.network(
-                          selectedPokemon['img']!,
+                          selectedPokemon.img,
                           fit: BoxFit.contain,
                           width: screenWidth * 0.25,
                         ),
@@ -96,7 +95,7 @@ class PokewalkerScreen extends StatelessWidget {
                       ).createShader(bounds);
                     },
                     child: Text(
-                      '${kilometersWalked * 1000} METROS',
+                      '$metersWalked METROS',
                       style: GoogleFonts.bungeeHairline(
                         textStyle: TextStyle(
                           fontSize: 20,
@@ -127,7 +126,7 @@ class PokewalkerScreen extends StatelessWidget {
                       ).createShader(bounds);
                     },
                     child: Text(
-                      '${kilometersToNextLevel - kilometersWalked} KM RESTANTES',
+                      '${metersToNextLevel - metersWalked} METROS RESTANTES',
                       style: GoogleFonts.bungeeHairline(
                         textStyle: TextStyle(
                           fontSize: 20,

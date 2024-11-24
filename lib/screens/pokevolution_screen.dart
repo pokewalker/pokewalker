@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/model/pokemon.dart';
 import 'package:pokewalker/screens/select_pokemon_screen.dart';
 import 'package:pokewalker/screens/thank_you_screen.dart';
 
 class PokevolutionScreen extends StatelessWidget {
-  final Map<String, String> selectedPokemon;
+  final Pokemon selectedPokemon;
 
   const PokevolutionScreen({super.key, required this.selectedPokemon});
 
@@ -64,7 +65,7 @@ class PokevolutionScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment(0.0, -0.2),
                         child: Image.network(
-                          selectedPokemon['img']!,
+                          selectedPokemon.img,
                           fit: BoxFit.contain,
                           width: screenWidth * 0.25,
                         ),
@@ -91,7 +92,7 @@ class PokevolutionScreen extends StatelessWidget {
                       ).createShader(bounds);
                     },
                     child: Text(
-                      'PARABÉNS, VOCÊ EVOLUIU SEU ${selectedPokemon['name']?.toUpperCase()}!',
+                      'PARABÉNS, VOCÊ EVOLUIU SEU ${selectedPokemon.name.toUpperCase()}!',
                       style: GoogleFonts.bungeeHairline(
                         textStyle: TextStyle(
                           fontSize: 20,

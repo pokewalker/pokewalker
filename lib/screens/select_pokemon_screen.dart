@@ -1,47 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/model/pokemon.dart';
 import 'package:pokewalker/pokemon_item.dart';
+import 'package:pokewalker/provider/generic_crud_provider.dart';
 import 'package:pokewalker/screens/landing_page_screen.dart';
 
 class SelectPokemonScreen extends StatelessWidget {
   SelectPokemonScreen({super.key});
 
-  final double kilometersToNextLevel = 9.0;
+  final double metersToNextLevel = 9.0;
 
-  final List<Map<String, String>> pokemons = [
-    {
-      'name': 'Bulbasaur',
-      'level': 'Lvl. 4',
-      'kilometers': '8',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
-    },
-    {
-      'name': 'Charmander',
-      'level': 'Lvl. 3',
-      'kilometers': '6.0',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'
-    },
-    {
-      'name': 'Squirtle',
-      'level': 'Lvl. 2',
-      'kilometers': '4.0',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png'
-    },
-    {
-      'name': 'Pikachu',
-      'level': 'Lvl. 1',
-      'kilometers': '9.0',
-      'img':
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
-    }
-  ];
+  List<Pokemon> pokemons = [];
+
+  Future<void> _fetchPokemonList() async {
+    pokemons = await GenericCrudProvider.helper.getPokemonList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Obtém a largura da tela
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -83,25 +59,43 @@ class SelectPokemonScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(
-                    height: 10), // Espaçamento menor entre o título e o grid
+                SizedBox(height: 10),
                 Expanded(
-                  child: Container(
-                    width: screenWidth * 0.6,
-                    child: GridView.builder(
-                      padding: EdgeInsets.zero, // Remove padding extra
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Número de ícones por linha
-                        crossAxisSpacing: 10, // Espaçamento horizontal
-                        mainAxisSpacing: 10, // Espaçamento vertical
-                        childAspectRatio: 0.8, // Razão de aspecto dos itens
-                      ),
-                      itemCount: pokemons.length,
-                      itemBuilder: (context, index) {
-                        final pokemon = pokemons[index];
-                        return PokemonItem(pokemon: pokemon, kilometersToNextLevel: kilometersToNextLevel);
-                      },
-                    ),
+                  child: FutureBuilder<void>(
+                    future: _fetchPokemonList(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        );
+                      } else {
+                        return Container(
+                          width: screenWidth * 0.6,
+                          child: GridView.builder(
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 0.8,
+                            ),
+                            itemCount: pokemons.length,
+                            itemBuilder: (context, index) {
+                              final pokemon = pokemons[index];
+                              return PokemonItem(
+                                  pokemon: pokemon,
+                                  metersToNextLevel:
+                                      pokemon.metersToNextLevel.toDouble());
+                            },
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ),
               ],
@@ -113,12 +107,11 @@ class SelectPokemonScreen extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.black, size: 30),
               onPressed: () {
-                // Lógica de voltar
                 Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => LandingPageScreen(),
-                        ),
-                      );
+                  MaterialPageRoute(
+                    builder: (context) => LandingPageScreen(),
+                  ),
+                );
               },
             ),
           ),
