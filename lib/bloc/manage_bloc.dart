@@ -6,7 +6,7 @@ import '../provider/generic_crud_provider.dart';
 class ManageBloc extends Bloc<ManageEvent, ManageState> {
   ManageBloc(super.initialState) {
     GenericCrudProvider.helper.stream.listen((noteId) {
-      add(GetNoteListEvent());
+      add(GetPokemonListEvent());
     });
 
     on<DeleteEvent>((event, emit) {
@@ -45,7 +45,7 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
       },
     );
 
-    on<GetNoteListEvent>((event, emit) async {
+    on<GetPokemonListEvent>((event, emit) async {
       List<Pokemon> pokemons =
           await GenericCrudProvider.helper.getPokemonList();
 
@@ -78,7 +78,7 @@ class DeleteEvent extends ManageEvent {
   DeleteEvent({required this.pokemonId});
 }
 
-class GetNoteListEvent extends ManageEvent {}
+class GetPokemonListEvent extends ManageEvent {}
 
 class UpdateRequest extends ManageEvent {
   int pokemonId;
