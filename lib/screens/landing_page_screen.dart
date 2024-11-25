@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pokewalker/screens/auth_screen.dart';
 import 'package:pokewalker/screens/register_screen.dart';
+import 'package:pokewalker/screens/wrapper.dart';
 
 class LandingPageScreen extends StatelessWidget {
   const LandingPageScreen({super.key});
@@ -104,7 +104,7 @@ class LandingPageScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => AuthScreen(),
+                      builder: (context) => Wrapper(),
                     ),
                   );
                 },

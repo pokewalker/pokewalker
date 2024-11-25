@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:pokewalker/model/pokemon.dart';
 import 'package:pokewalker/screens/pokevolution_screen.dart';
 import 'package:pokewalker/screens/pokewalker_screen.dart';
 
 class PokemonItem extends StatelessWidget {
-  final Map<String, String> pokemon;
+  final Pokemon pokemon;
 
-  final double kilometersToNextLevel;
+  final double metersToNextLevel;
 
-  const PokemonItem({super.key, required this.pokemon, required this.kilometersToNextLevel});
+  const PokemonItem(
+      {super.key, required this.pokemon, required this.metersToNextLevel});
 
   bool shouldEvolve() {
-    return double.tryParse(pokemon['kilometers']!) == kilometersToNextLevel;
+    return pokemon.meters == pokemon.metersToNextLevel;
   }
 
   @override
@@ -27,7 +29,6 @@ class PokemonItem extends StatelessWidget {
             } else {
               return PokewalkerScreen(
                 selectedPokemon: pokemon,
-                kilometersToNextLevel: kilometersToNextLevel,
                 // Passa o Pokémon selecionado
               );
             }
@@ -48,17 +49,25 @@ class PokemonItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.network(
-                pokemon['img']!,
+                pokemon.img,
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/images/pokemon-image-not-found.png', // Caminho da imagem padrão
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
               Text(
-                pokemon['name']!,
+                pokemon.name,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               Text(
-                pokemon['level']!,
+                'Lvl. ${pokemon.level}',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ],

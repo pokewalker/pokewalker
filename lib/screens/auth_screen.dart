@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/bloc/auth_bloc.dart';
 import 'package:pokewalker/screens/select_pokemon_screen.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
+
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  String login = "";
+  String senha = "";
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +25,7 @@ class AuthScreen extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
+          // Fundo com gradiente
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -42,94 +54,122 @@ class AuthScreen extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 30),
-                Container(
-                  width: screenWidth * 0.8,
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.black, width: 3),
-                  ),
-                  child: Text(
-                    'INSIRA SEUS DADOS',
-                    style: GoogleFonts.bungeeHairline(
-                      textStyle: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.black,
-                      ),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
 
-                // Campo de Usuário
-                Container(
-                  width: screenWidth * 0.8,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: 'Usuário',
-                      hintStyle: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32,
-                          color: Colors.grey[600],
+                // Formulário
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      // Campo de Login
+                      Container(
+                        width: screenWidth * 0.8,
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            hintText: 'Email',
+                            hintStyle: GoogleFonts.quicksand(
+                              textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey[400],
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 20),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                          onSaved: (String? newValue) {
+                            login = newValue ?? "";
+                          },
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "Erro: Insira seu login";
+                            } else if (value.length < 3) {
+                              return "Erro: Login deve ter no mínimo 3 caracteres";
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[400],
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
-                // Campo de Senha
-                Container(
-                  width: screenWidth * 0.8,
-                  child: TextField(
-                    obscureText: true,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: 'Senha',
-                      hintStyle: GoogleFonts.quicksand(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32,
-                          color: Colors.grey[600],
+                      // Campo de Senha
+                      Container(
+                        width: screenWidth * 0.8,
+                        child: TextFormField(
+                          obscureText: true,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            hintText: 'Senha',
+                            hintStyle: GoogleFonts.quicksand(
+                              textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey[400],
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 20),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                          onSaved: (String? newValue) {
+                            senha = newValue ?? "";
+                          },
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "Erro: Insira sua senha";
+                            } else if (value.length < 3) {
+                              return "Erro: Senha deve ter no mínimo 3 caracteres";
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[400],
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
 
                 // Botão de Login
                 Container(
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SelectPokemonScreen(),
-                        ),
-                      );
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        BlocProvider.of<AuthBloc>(context).add(LoginUser(
+                          email: login,
+                          password: senha,
+                        ));
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Login efetuado com sucesso!',
+                            ),
+                          ),
+                        );
+
+                        if (BlocProvider.of<AuthBloc>(context).state
+                            is Authenticated) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SelectPokemonScreen(),
+                            ),
+                          );
+                        }
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(198, 33, 33, 1),
@@ -153,13 +193,13 @@ class AuthScreen extends StatelessWidget {
               ],
             ),
           ),
+          // Botão de voltar
           Positioned(
             top: 40,
             left: 16,
             child: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.black, size: 30),
               onPressed: () {
-                // Lógica de voltar
                 Navigator.of(context).pop();
               },
             ),
