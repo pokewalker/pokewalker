@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokewalker/bloc/manage_bloc.dart';
 import 'package:pokewalker/model/pokemon.dart';
+import 'package:pokewalker/screens/pokevolution_screen.dart';
 
 class PokewalkerScreen extends StatelessWidget {
   final Pokemon selectedPokemon;
@@ -194,6 +195,17 @@ class PokewalkerScreen extends StatelessWidget {
                               BlocProvider.of<ManageBloc>(context).add(
                                 SubmitEvent(pokemon: selectedPokemon),
                               );
+
+                              if (selectedPokemon.meters ==
+                                  selectedPokemon.metersToNextLevel) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) {
+                                    return PokevolutionScreen(
+                                      selectedPokemon: selectedPokemon,
+                                    );
+                                  }),
+                                );
+                              }
                             },
                             child: Text('Andar'),
                           ),
