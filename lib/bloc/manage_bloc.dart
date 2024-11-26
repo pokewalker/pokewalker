@@ -14,10 +14,6 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
       add(GetPokemonListEvent());
     });
 
-    on<DeleteEvent>((event, emit) {
-      GenericCrudProvider.helper.deletePokemon(event.pokemonId);
-    });
-
     on<UpdateRequest>(
       (event, emit) {
         emit(
@@ -76,11 +72,6 @@ abstract class ManageEvent {}
 class SubmitEvent extends ManageEvent {
   Pokemon pokemon;
   SubmitEvent({required this.pokemon});
-}
-
-class DeleteEvent extends ManageEvent {
-  int pokemonId;
-  DeleteEvent({required this.pokemonId});
 }
 
 class GetPokemonListEvent extends ManageEvent {}

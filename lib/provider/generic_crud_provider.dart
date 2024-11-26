@@ -47,17 +47,23 @@ class GenericCrudProvider {
   }
 
   Future<int> updatePokemon(int pokemonId, Pokemon pokemon) async {
-    _dio.put('$backendUrl/pokemons/$pokemonId', data: pokemon.toMap());
+    // Recupera o AuthBloc usando o contexto
+    final authState = BlocProvider.of<AuthBloc>(context!).state;
 
+    // Verifica se o estado atual é Authenticated
+    if (authState is Authenticated) {
+      final userId = authState.id;
+      Response response = await _dio.put(
+          '$backendUrl/pokemons/$pokemonId?userId=$userId',
+          data: pokemon.toMap());
+
+      print(response.data);
+
+      return pokemonId;
+    } else {
+      throw Exception("Usuário não está autenticado.");
+    }
     //_controller.sink.add(pokemonId);
-    return pokemonId;
-  }
-
-  Future<int> deletePokemon(int pokemonId) async {
-    _dio.delete('$backendUrl/pokemons/$pokemonId');
-
-    //_controller.sink.add(pokemonId);
-    return pokemonId;
   }
 
   Future<List<Pokemon>> getPokemonList() async {

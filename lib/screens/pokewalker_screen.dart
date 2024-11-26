@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/bloc/manage_bloc.dart';
 import 'package:pokewalker/model/pokemon.dart';
 
 class PokewalkerScreen extends StatelessWidget {
@@ -11,11 +13,6 @@ class PokewalkerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Obtém a largura da tela para garantir o design responsivo
     double screenWidth = MediaQuery.of(context).size.width;
-
-    int metersWalked = selectedPokemon.meters;
-    int metersToNextLevel = selectedPokemon.metersToNextLevel;
-
-    double progressPercentage = metersWalked / metersToNextLevel;
 
     return Scaffold(
       body: Stack(
@@ -73,7 +70,7 @@ class PokewalkerScreen extends StatelessWidget {
                           width: screenWidth * 0.25,
                           errorBuilder: (context, error, stackTrace) {
                             return Image.asset(
-                              'assets/images/pokemon-image-not-found.png', // Caminho da imagem padrão
+                              'assets/images/pokemon-image-not-found.png',
                               width: 100,
                               height: 100,
                               fit: BoxFit.cover,
@@ -86,110 +83,129 @@ class PokewalkerScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 30),
 
-                // Botão 1 (Distância percorrida)
-                Container(
-                  width: screenWidth * 0.7,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.black, width: 2),
-                  ),
-                  child: ShaderMask(
-                    shaderCallback: (bounds) {
-                      return LinearGradient(
-                        colors: [Colors.black, Colors.black], // Cor da borda
-                        stops: [1.0, 1.0], // Define o contorno
-                      ).createShader(bounds);
-                    },
-                    child: Text(
-                      '$metersWalked METROS',
-                      style: GoogleFonts.bungeeHairline(
-                        textStyle: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white, // Cor do texto
-                        ),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
+                // Usando BlocBuilder para gerenciar o estado
+                BlocBuilder<ManageBloc, ManageState>(
+                  builder: (context, state) {
+                    if (state is InsertState) {
+                      Pokemon pokemon = state.pokemons.firstWhere(
+                        (element) => element.id == selectedPokemon.id,
+                      );
+                      final metersWalked = pokemon.meters;
+                      final metersToNextLevel = pokemon.metersToNextLevel;
+                      final progressPercentage =
+                          metersWalked / metersToNextLevel;
 
-// Botão 2 (Distância restante)
-                Container(
-                  width: screenWidth * 0.7,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.black, width: 2),
-                  ),
-                  child: ShaderMask(
-                    shaderCallback: (bounds) {
-                      return LinearGradient(
-                        colors: [Colors.black, Colors.black], // Cor da borda
-                        stops: [1.0, 1.0], // Define o contorno
-                      ).createShader(bounds);
-                    },
-                    child: Text(
-                      '${metersToNextLevel - metersWalked} METROS RESTANTES',
-                      style: GoogleFonts.bungeeHairline(
-                        textStyle: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white, // Cor do texto
-                        ),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30),
+                      return Column(
+                        children: [
+                          // Botão 1 (Distância percorrida)
+                          Container(
+                            width: screenWidth * 0.7,
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.black, width: 2),
+                            ),
+                            child: Text(
+                              '$metersWalked METROS',
+                              style: GoogleFonts.bungeeHairline(
+                                textStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          SizedBox(height: 20),
 
-                // Barra de progresso com o Pokémon correndo
-                Stack(
-                  children: [
-                    // Fundo da barra de progresso
-                    Container(
-                      width: screenWidth * 0.7,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
-                    ),
-                    // Barra preenchida
-                    Container(
-                      width: screenWidth * 0.7 * progressPercentage,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.greenAccent,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
-                    ),
-                    // Imagem do Ponyta na barra de progresso
-                    Positioned(
-                      left: screenWidth * 0.7 * progressPercentage -
-                          35, // Posiciona conforme o progresso
-                      top: -10, // Ajuste para posicionar sobre a barra
-                      child: Image.network(
-                        'https://i.imgur.com/ljERCcz.jpg', // Imagem do Ponyta
-                        width: 60,
-                        height: 60,
-                      ),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          // Lógica de andar
-                          // Atualiza a distância percorrida
-                          // Atualiza o nível do Pokémon
-                        },
-                        child: Text('Andar')),
-                  ],
+                          // Botão 2 (Distância restante)
+                          Container(
+                            width: screenWidth * 0.7,
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.black, width: 2),
+                            ),
+                            child: Text(
+                              '${metersToNextLevel - metersWalked} METROS RESTANTES',
+                              style: GoogleFonts.bungeeHairline(
+                                textStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          SizedBox(height: 30),
+
+                          // Barra de progresso com o Pokémon correndo
+                          Stack(
+                            children: [
+                              // Fundo da barra de progresso
+                              Container(
+                                width: screenWidth * 0.7,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(12),
+                                  border:
+                                      Border.all(color: Colors.black, width: 2),
+                                ),
+                              ),
+                              // Barra preenchida
+                              Container(
+                                width: screenWidth * 0.7 * progressPercentage,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.greenAccent,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border:
+                                      Border.all(color: Colors.black, width: 2),
+                                ),
+                              ),
+                              // Imagem do Pokémon na barra de progresso
+                              Positioned(
+                                left: screenWidth * 0.7 * progressPercentage -
+                                    35, // Posiciona conforme o progresso
+                                top:
+                                    -10, // Ajuste para posicionar sobre a barra
+                                child: Image.network(
+                                  'https://i.imgur.com/ljERCcz.jpg',
+                                  width: 60,
+                                  height: 60,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              BlocProvider.of<ManageBloc>(context).add(
+                                UpdateRequest(pokemonId: selectedPokemon.id),
+                              );
+
+                              selectedPokemon.meters += 1;
+
+                              BlocProvider.of<ManageBloc>(context).add(
+                                SubmitEvent(pokemon: selectedPokemon),
+                              );
+                            },
+                            child: Text('Andar'),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Text(
+                        'Erro ao carregar os dados do Pokémon.',
+                        style: TextStyle(color: Colors.red),
+                      );
+                    }
+                  },
                 ),
               ],
             ),

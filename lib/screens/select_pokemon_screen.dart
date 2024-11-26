@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pokewalker/bloc/auth_bloc.dart';
+import 'package:pokewalker/bloc/manage_bloc.dart';
 import 'package:pokewalker/model/pokemon.dart';
 import 'package:pokewalker/pokemon_item.dart';
-import 'package:pokewalker/provider/generic_crud_provider.dart';
 import 'package:pokewalker/screens/landing_page_screen.dart';
 
 class SelectPokemonScreen extends StatelessWidget {
   SelectPokemonScreen({super.key});
 
-  final double metersToNextLevel = 9.0;
-
-  List<Pokemon> pokemons = [];
-
-  Future<void> _fetchPokemonList() async {
-    pokemons = await GenericCrudProvider.helper.getPokemonList();
-  }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+
+    // Aciona o evento para buscar a lista de Pokémons ao carregar a tela
+    BlocProvider.of<ManageBloc>(context).add(GetPokemonListEvent());
 
     return Scaffold(
       body: Stack(
@@ -63,18 +57,11 @@ class SelectPokemonScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Expanded(
-                  child: FutureBuilder<void>(
-                    future: _fetchPokemonList(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(
-                          child: Text('Error: ${snapshot.error}'),
-                        );
-                      } else {
+                  child: BlocBuilder<ManageBloc, ManageState>(
+                    builder: (context, state) {
+                      if (state is InsertState || state is UpdateState) {
+                        final List<Pokemon> pokemons = state.pokemons;
+
                         return Container(
                           width: screenWidth * 0.6,
                           child: GridView.builder(
@@ -90,13 +77,19 @@ class SelectPokemonScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final pokemon = pokemons[index];
                               return PokemonItem(
-                                  pokemon: pokemon,
-                                  metersToNextLevel:
-                                      pokemon.metersToNextLevel.toDouble());
+                                pokemon: pokemon,
+                                metersToNextLevel:
+                                    pokemon.metersToNextLevel.toDouble(),
+                              );
                             },
                           ),
                         );
                       }
+
+                      // Exibe um carregamento simples se o estado não for carregado
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
                     },
                   ),
                 ),
