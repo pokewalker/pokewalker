@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokewalker/model/pokemon.dart';
+import 'package:pokewalker/screens/pokewalker_screen.dart';
 import 'package:pokewalker/screens/select_pokemon_screen.dart';
 import 'package:pokewalker/screens/thank_you_screen.dart';
 
@@ -113,8 +114,6 @@ class PokevolutionScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-
-                // Botão para verificar última evolução
                 Container(
                   width: screenWidth * 0.7,
                   height: 50,
@@ -129,12 +128,14 @@ class PokevolutionScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ThankYouScreen(),
+                          builder: (context) => PokewalkerScreen(
+                            selectedPokemon: selectedPokemon,
+                          ),
                         ),
                       );
                     },
                     child: Text(
-                      'ULTIMA EVOLUÇÃO!',
+                      'CONTINUAR PONTUANDO!',
                       style: GoogleFonts.bungeeHairline(
                         textStyle: TextStyle(
                           fontSize: 20,
@@ -145,6 +146,7 @@ class PokevolutionScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 SizedBox(height: 20),
 
                 // Botão para selecionar outro Pokémon
@@ -168,6 +170,38 @@ class PokevolutionScreen extends StatelessWidget {
                     },
                     child: Text(
                       'SELECIONAR OUTRO',
+                      style: GoogleFonts.bungeeHairline(
+                        textStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                // Botão para verificar última evolução
+                Container(
+                  width: screenWidth * 0.7,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 37, 113, 255),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        side: BorderSide(color: Colors.black, width: 2),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ThankYouScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'PARABÉNS!',
                       style: GoogleFonts.bungeeHairline(
                         textStyle: TextStyle(
                           fontSize: 20,

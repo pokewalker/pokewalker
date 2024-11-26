@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokewalker/bloc/auth_bloc.dart';
 import 'package:pokewalker/bloc/manage_bloc.dart';
+import 'package:pokewalker/provider/generic_crud_provider.dart';
 import 'package:pokewalker/screens/landing_page_screen.dart';
 
 void main() async {
@@ -29,10 +30,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) {
-            return ManageBloc(InsertState(pokemons: []))
-              ..add(
-                GetPokemonListEvent(),
-              );
+            return ManageBloc(
+              initialState: InsertState(pokemons: []),
+              genericCrudProvider: GenericCrudProvider.helper,
+            );
           },
         ),
         BlocProvider(

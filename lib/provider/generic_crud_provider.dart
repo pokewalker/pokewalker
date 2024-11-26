@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokewalker/bloc/auth_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import '../model/pokemon.dart';
 
@@ -8,6 +11,7 @@ String backendUrl =
     'https://2038e686-3f67-4c0d-beb1-49ce018f7d84-00-37x6uqubfbnx3.spock.replit.dev'; //TODO move to a constants file
 
 class GenericCrudProvider {
+  BuildContext? context;
   static GenericCrudProvider helper = GenericCrudProvider._createInstance();
   Dio _dio = Dio();
 
@@ -20,44 +24,68 @@ class GenericCrudProvider {
   }
 
   Future<int> insertPokemon(Pokemon pokemon) async {
-    _dio.post('$backendUrl/pokemons',
-        data: pokemon
-            .toMap()); //TODO make the replit return the created pokemon register
+    // Recupera o AuthBloc usando o contexto
+    final authState = BlocProvider.of<AuthBloc>(context!).state;
 
-    //_controller.sink.add("1");
-    return 1;
+    // Verifica se o estado atual é Authenticated
+    if (authState is Authenticated) {
+      final userId = authState.id;
+
+      try {
+        Response response = await _dio
+            .post('$backendUrl/pokemons?userId=$userId', data: pokemon.toMap());
+
+        print(response.data);
+        return 1; // Indica sucesso
+      } catch (e) {
+        print('Erro ao inserir Pokémon: $e');
+        return -1; // Indica erro
+      }
+    } else {
+      throw Exception("Usuário não está autenticado.");
+    }
   }
 
   Future<int> updatePokemon(int pokemonId, Pokemon pokemon) async {
-    _dio.put('$backendUrl/pokemons/$pokemonId', data: pokemon.toMap());
+    // Recupera o AuthBloc usando o contexto
+    final authState = BlocProvider.of<AuthBloc>(context!).state;
 
+    // Verifica se o estado atual é Authenticated
+    if (authState is Authenticated) {
+      final userId = authState.id;
+      Response response = await _dio.put(
+          '$backendUrl/pokemons/$pokemonId?userId=$userId',
+          data: pokemon.toMap());
+
+      print(response.data);
+
+      return pokemonId;
+    } else {
+      throw Exception("Usuário não está autenticado.");
+    }
     //_controller.sink.add(pokemonId);
-    return pokemonId;
-  }
-
-  Future<int> deletePokemon(int pokemonId) async {
-    _dio.delete('$backendUrl/pokemons/$pokemonId');
-
-    //_controller.sink.add(pokemonId);
-    return pokemonId;
   }
 
   Future<List<Pokemon>> getPokemonList() async {
-    Response response = await _dio.get('$backendUrl/pokemons');
+    // Recupera o AuthBloc usando o contexto
+    final authState = BlocProvider.of<AuthBloc>(context!).state;
 
-    List<Pokemon> pokemons = [];
+    // Verifica se o estado atual é Authenticated
+    if (authState is Authenticated) {
+      final userId = authState.id;
 
-    response.data.forEach((value) {
-      Pokemon pokemon = Pokemon.fromMap(value);
-      pokemons.add(pokemon);
-    });
+      Response response = await _dio.get('$backendUrl/pokemons?userId=$userId');
 
-    // response.data.forEach((key, value) {
-    //   Pokemon pokemon = Pokemon.fromMap(value);
-    //   pokemons.add(pokemon);
-    // });
+      List<Pokemon> pokemons = [];
+      response.data.forEach((value) {
+        Pokemon pokemon = Pokemon.fromMap(value);
+        pokemons.add(pokemon);
+      });
 
-    return pokemons;
+      return pokemons;
+    } else {
+      throw Exception("Usuário não está autenticado.");
+    }
   }
 
   StreamController? _controller;

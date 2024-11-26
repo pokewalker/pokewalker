@@ -4,13 +4,14 @@ import '../model/pokemon.dart';
 import '../provider/generic_crud_provider.dart';
 
 class ManageBloc extends Bloc<ManageEvent, ManageState> {
-  ManageBloc(super.initialState) {
-    GenericCrudProvider.helper.stream.listen((noteId) {
-      add(GetPokemonListEvent());
-    });
+  final GenericCrudProvider genericCrudProvider;
 
-    on<DeleteEvent>((event, emit) {
-      GenericCrudProvider.helper.deletePokemon(event.pokemonId);
+  ManageBloc({
+    required ManageState initialState,
+    required this.genericCrudProvider,
+  }) : super(initialState) {
+    GenericCrudProvider.helper.stream.listen((pokemonId) {
+      add(GetPokemonListEvent());
     });
 
     on<UpdateRequest>(
@@ -71,11 +72,6 @@ abstract class ManageEvent {}
 class SubmitEvent extends ManageEvent {
   Pokemon pokemon;
   SubmitEvent({required this.pokemon});
-}
-
-class DeleteEvent extends ManageEvent {
-  int pokemonId;
-  DeleteEvent({required this.pokemonId});
 }
 
 class GetPokemonListEvent extends ManageEvent {}

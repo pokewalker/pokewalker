@@ -15,7 +15,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
         );
 
-        emit(Authenticated(email: userCredential.user?.email ?? 'Usuário'));
+        emit(Authenticated(
+            id: userCredential.user?.uid ?? '-1',
+            email: userCredential.user?.email ?? 'Usuário'));
       } catch (e) {
         emit(AuthError(
             message:
@@ -74,8 +76,9 @@ abstract class AuthState {}
 class Unauthenticated extends AuthState {}
 
 class Authenticated extends AuthState {
+  String id;
   String email;
-  Authenticated({required this.email});
+  Authenticated({required this.id, required this.email});
 }
 
 class AuthError extends AuthState {

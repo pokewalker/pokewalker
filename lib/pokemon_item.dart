@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokewalker/bloc/manage_bloc.dart';
 import 'package:pokewalker/model/pokemon.dart';
 import 'package:pokewalker/screens/pokevolution_screen.dart';
 import 'package:pokewalker/screens/pokewalker_screen.dart';
@@ -19,6 +21,7 @@ class PokemonItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        BlocProvider.of<ManageBloc>(context).add(SubmitEvent(pokemon: pokemon));
         // Ação ao clicar no Pokémon
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) {
