@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/provider/generic_crud_provider.dart';
 import 'package:pokewalker/screens/register_screen.dart';
 import 'package:pokewalker/screens/wrapper.dart';
 
@@ -8,6 +9,8 @@ class LandingPageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GenericCrudProvider.helper.context = context;
+
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(

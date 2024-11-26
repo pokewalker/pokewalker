@@ -182,6 +182,13 @@ class PokewalkerScreen extends StatelessWidget {
                         height: 60,
                       ),
                     ),
+                    TextButton(
+                        onPressed: () {
+                          // Lógica de andar
+                          // Atualiza a distância percorrida
+                          // Atualiza o nível do Pokémon
+                        },
+                        child: Text('Andar')),
                   ],
                 ),
               ],

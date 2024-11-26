@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/bloc/auth_bloc.dart';
 import 'package:pokewalker/model/pokemon.dart';
 import 'package:pokewalker/pokemon_item.dart';
 import 'package:pokewalker/provider/generic_crud_provider.dart';

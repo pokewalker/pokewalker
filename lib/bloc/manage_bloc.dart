@@ -4,8 +4,13 @@ import '../model/pokemon.dart';
 import '../provider/generic_crud_provider.dart';
 
 class ManageBloc extends Bloc<ManageEvent, ManageState> {
-  ManageBloc(super.initialState) {
-    GenericCrudProvider.helper.stream.listen((noteId) {
+  final GenericCrudProvider genericCrudProvider;
+
+  ManageBloc({
+    required ManageState initialState,
+    required this.genericCrudProvider,
+  }) : super(initialState) {
+    GenericCrudProvider.helper.stream.listen((pokemonId) {
       add(GetPokemonListEvent());
     });
 
