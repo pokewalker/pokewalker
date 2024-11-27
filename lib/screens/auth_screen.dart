@@ -153,14 +153,6 @@ class _AuthScreenState extends State<AuthScreen> {
                           password: senha,
                         ));
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Login efetuado com sucesso!',
-                            ),
-                          ),
-                        );
-
                         if (BlocProvider.of<AuthBloc>(context).state
                             is Authenticated) {
                           Navigator.of(context).push(

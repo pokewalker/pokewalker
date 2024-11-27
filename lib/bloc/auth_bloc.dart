@@ -21,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         emit(AuthError(
             message:
-                'Falha no login: ${e is FirebaseAuthException ? e.message : e.toString()}'));
+                'Falha no login: A combinação de e-mail e senha não foi encontrada.'));
       }
     });
 
