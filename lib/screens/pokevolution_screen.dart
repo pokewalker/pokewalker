@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokewalker/bloc/manage_bloc.dart';
 import 'package:pokewalker/model/pokemon.dart';
 import 'package:pokewalker/screens/pokewalker_screen.dart';
 import 'package:pokewalker/screens/select_pokemon_screen.dart';
@@ -126,6 +128,18 @@ class PokevolutionScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      BlocProvider.of<ManageBloc>(context).add(
+                        UpdateRequest(pokemonId: selectedPokemon.id),
+                      );
+
+                      selectedPokemon.level += 1;
+
+                      BlocProvider.of<ManageBloc>(context).add(
+                        SubmitEvent(pokemon: selectedPokemon),
+                      );
+
+                      Navigator.pop(context);
+
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => PokewalkerScreen(
